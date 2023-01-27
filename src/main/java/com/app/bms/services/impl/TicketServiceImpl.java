@@ -14,6 +14,8 @@ import com.app.bms.services.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author t0k02w6 on 27/01/23
@@ -31,6 +33,7 @@ public class TicketServiceImpl implements TicketService {
   private UserService userService;
 
   @Override
+  @Transactional(isolation = Isolation.SERIALIZABLE)
   public Ticket createTicket(TicketDTO ticketDTO) {
     // check for seat availability
     List<ShowSeat> showSeats = showSeatService.getSeats(ticketDTO.getShowSeatIds());
